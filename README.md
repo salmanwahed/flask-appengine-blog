@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Python Flask Skeleton for Google App Engine
 
 A skeleton for building Python applications on Google App Engine with the
@@ -78,3 +79,7 @@ See [LICENSE](LICENSE)
 
 ## Author
 Logan Henriquez and Johan Euphrosine
+=======
+# flask-appengine-blog
+Basic blog application using flask and google appengine ndb
+>>>>>>> 63aa377bf3cb2c3776ee838bb30d36a483518b1a

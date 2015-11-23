@@ -1,0 +1,11 @@
+{% extends "base_nav.html" %}
+{{ pagedown.include_pagedown() }}
+{% block article %}
+    <form action="/new_post/" method="post">
+    {{ form.hidden_tag() }}
+    Title : {{ form.title }} <br> <br>
+    Body : {{ form.body(rows="20", cols="100") | safe }} <br> <br>
+    Tags : {{ form.tags }} <br> <br>
+    {{ form.submit }}
+    </form>
+{% endblock %}

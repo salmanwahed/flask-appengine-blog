@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block article %}
+    {% if blogs %}
+        {% for blog in blogs %}
+            <article class="post post-1">
+                <header class="entry-header">
+                    <h1 class="entry-title">
+                        <a href="{{ blog.absolute_url }}">{{ blog.title }}</a>
+                    </h1>
+
+                    <div class="entry-meta">
+                        <span class="post-category">
+                            {% for tag in blog.tags %}
+                                <button><a href="/tag/{{ tag }}">{{ tag }}</a></button>
+                            {% endfor %}
+                        </span>
+
+                        <span class="post-date"><a href="#">
+                            <time class="entry-date" datetime="2012-11-09T23:15:57+00:00">{{ blog.pub_date }}</time>
+                        </a></span>
+
+                        <span class="post-author"><a href="#">Albert Einstein</a></span>
+
+                        <span class="comments-link"><a href="#">4 Comments</a></span>
+                    </div>
+                </header>
+                <div class="entry-content clearfix">
+                    {{ blog.body|markdown }}
+                    <div class="read-more cl-effect-14">
+                        <a href="single.html" class="more-link">Continue reading <span class="meta-nav">→</span></a>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">Recent Posts</h3>
+        <ul>
+            {% for blog in blogs %}
+            <li>
+                <a href="#">Adaptive Vs. Responsive Layouts And Optimal Text Readability</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="widget widget-archives">
+        <h3 class="widget-title">Archives</h3>
+        <ul>
+            <li>
+                <a href="#">November 2014</a>
+            </li>
+            <li>
+                <a href="#">September 2014</a>
+            </li>
+            <li>
+                <a href="#">January 2013</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="widget widget-category">
+        <h3 class="widget-title">Category</h3>
+        <ul>
+            <li>
+                <a href="#">Web Design</a>
+            </li>
+            <li>
+                <a href="#">Web Development</a>
+            </li>
+            <li>
+                <a href="#">SEO</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

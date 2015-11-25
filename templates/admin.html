@@ -22,31 +22,29 @@
 <div class="container">
     <h2>Blogs</h2>
 
-    <p>The .table-hover class enables a hover state on table rows:</p>
+    <a href="/new_post" class="btn btn-primary">NEW POST</a>
     <table class="table table-hover">
         <thead>
         <tr>
             <th>Title</th>
             <th>Date</th>
             <th>Published</th>
+            <th>Preview</th>
+            <th>Update</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-        </tr>
-        <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td>mary@example.com</td>
-        </tr>
-        <tr>
-            <td>July</td>
-            <td>Dooley</td>
-            <td>july@example.com</td>
-        </tr>
+        {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.pub_date }}</td>
+                <td>{{ blog.published }}</td>
+                <td><a class="btn btn-info" href="/post/preview/{{ blog.blog_id }}">preview</a></td>
+                <td><a class="btn btn-success" href="/post/update/{{ blog.blog_id }}">update</a></td>
+                <td><a class="btn btn-danger" href="/post/delete/{{ blog.blog_id }}">delete</a></td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

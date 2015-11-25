@@ -12,4 +12,3 @@ class BlogEntryForm(Form):
     body = PageDownField("Enter in markdown syntax")
     tags = StringField('tags', validators=[DataRequired()])
     submit = SubmitField("Publish")
-

@@ -9,7 +9,7 @@ from settings import *
 # will be consistent.  However, the write rate should be limited to
 # ~1/second.
 
-def get_pkey(blogentry_name=DEFAULT_BLOGENTRY_NAME):
+def get_parent_key(blogentry_name=DEFAULT_BLOGENTRY_NAME):
     """Constructs a Datastore key for a BlogEntry entity.
 
     We use blogentry_name as the key.

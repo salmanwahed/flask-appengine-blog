@@ -23,22 +23,16 @@ Markdown(app)
 @app.route('/')
 def index():
     """Return a friendly HTTP greeting."""
-    blog_query = BlogEntry.query(ancestor=utils.get_pkey())
-    bolgs = blog_query.fetch()
+    blog_query = BlogEntry.query(ancestor=utils.get_parent_key())
+    bolgs = blog_query.fetch(5)
     return render_template('index.html', blogs=bolgs)
 
 
 @app.route('/salman/')
 def admin():
-    user = users.get_current_user()
-    if user:
-        email = user.email()
-        if email in ADMINS:
-            return "Hello Admin. <a href=%s>Logout</a>" % users.create_logout_url('/salman/')
-        else:
-            return "Not Admin <a href=%s>Login</a>" % users.create_login_url('/salman/')
-    else:
-        return "<a href=%s>Login</a>" % users.create_login_url('/salman/')
+    blog_query = BlogEntry.query(ancestor=utils.get_parent_key())
+    blogs = blog_query.fetch()
+    return render_template('admin.html', blogs=blogs)
 
 
 @app.route('/about/')
@@ -58,8 +52,9 @@ def contact():
 
 @app.route('/post/<string:blog_id>/<string:slug>/')
 @app.route('/post/<string:blog_id>/')
+@app.route('/post/preview/<string:blog_id>')
 def single_page(blog_id, slug=None):
-    blog = BlogEntry.get_by_id(int(blog_id), parent=utils.get_pkey())
+    blog = BlogEntry.get_by_id(int(blog_id), parent=utils.get_parent_key())
     return render_template('single.html', blog=blog)
 
 
@@ -67,7 +62,7 @@ def single_page(blog_id, slug=None):
 def new_post():
     form = BlogEntryForm(request.form)
     if request.method == 'POST' and form.validate():
-        blog_entry = BlogEntry(parent=utils.get_pkey())
+        blog_entry = BlogEntry(parent=utils.get_parent_key())
         blog_entry.title = form.title.data
         blog_entry.body = form.body.data
         tag_str = form.tags.data
@@ -76,6 +71,18 @@ def new_post():
         return redirect(url_for('index'))
 
     return render_template('new_post.html', form=form)
+
+
+@app.route('/post/update/<string:blog_id>', methods=['GET', 'POST'])
+def update_post(blog_id):
+    blog = BlogEntry.get_by_id(int(blog_id), parent=utils.get_parent_key())
+    return render_template('single.html', blog=blog)
+
+
+@app.route('/post/delete/<string:blog_id>', methods=['GET', 'DELETE'])
+def delete_post(blog_id):
+    blog = BlogEntry.get_by_id(int(blog_id), parent=utils.get_parent_key())
+    return render_template('single.html', blog=blog)
 
 
 @app.errorhandler(404)
